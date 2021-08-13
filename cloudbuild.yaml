@@ -1,13 +1,13 @@
 steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    entrypoint: 'gsutil'
+    args: ['cp', 'gs://${_BUCKET_NAME}/key.json', '.']
   - name: 'python:3.9-slim'
     entrypoint: /bin/sh
     args:
       - -c
-      - 'pip install flask && python test_app.py -v'
+      - 'pip install flask firebase_admin && python test_app.py -v'
     id: Test
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
-    entrypoint: 'gsutil'
-    args: ['cp', 'gs://${_BUCKET_NAME}/key.json', '.']
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -37,19 +37,4 @@ steps:
       - '--quiet'
     id: Deploy
     entrypoint: gcloud
-images:
-  - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
-options:
-  substitutionOption: ALLOW_LOOSE
-substitutions:
-  _DEPLOY_REGION: us-central1
-  _GCR_HOSTNAME: us.gcr.io
-  _PLATFORM: managed
-  _LABELS: gcb-trigger-id=da0f2d17-3889-4ba5-b887-a7b1a39cbea7
-  _TRIGGER_ID: da0f2d17-3889-4ba5-b887-a7b1a39cbea7
-  _SERVICE_NAME: gcp-resume-challenge-counter
-tags:
-  - gcp-cloud-build-deploy-cloud-run
-  - gcp-cloud-build-deploy-cloud-run-managed
-  - gcp-resume-challenge-counter
   
