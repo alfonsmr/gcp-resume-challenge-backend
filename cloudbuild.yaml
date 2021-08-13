@@ -2,6 +2,7 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
     entrypoint: 'gsutil'
     args: ['cp', 'gs://${_BUCKET_NAME}/key.json', '.']
+    id: Init
   - name: 'python:3.9-slim'
     entrypoint: /bin/sh
     args:
