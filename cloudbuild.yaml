@@ -25,4 +25,40 @@ steps:
       - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$SHORT_SHA'
     id: Push
 
+# This step clones the github_alfonsmr_gcp-resume-challenge-env repository
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Clone env repository
+    entrypoint: /bin/sh
+    args:
+      - '-c'
+      - |
+        gcloud source repos clone github_alfonsmr_gcp-resume-challenge-env && \
+        cd github_alfonsmr_gcp-resume-challenge-env && \
+        git checkout candidate && \
+        git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+
+# This step generates the new manifest
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Generate manifest
+    entrypoint: /bin/sh
+    args:
+      - '-c'
+      - |
+        sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" service.yaml.tpl | \
+        sed "s/COMMIT_SHA/${SHORT_SHA}/g" > github_alfonsmr_gcp-resume-challenge-env/service.yaml
+
+# This step pushes the manifest back to github_alfonsmr_gcp-resume-challenge-env
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Push manifest
+    entrypoint: /bin/sh
+    args:
+      - '-c'
+      - |
+        set -x && \
+        cd github_alfonsmr_gcp-resume-challenge-env && \
+        git add kubernetes.yaml && \
+        git commit -m "Deploying image ${_GCR_HOSTNAME}/{$PROJECT_ID}/{$REPO_NAME}/{$_SERVICE_NAME}:${SHORT_SHA}
+        Built from commit ${COMMIT_SHA} of repository gcp-resume-challenge-backend
+        Author: $(git log --format='%an <%ae>' -n 1 HEAD)" && \
+        git push origin candidate
   
