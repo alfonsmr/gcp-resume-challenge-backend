@@ -12,3 +12,6 @@ from firebase_admin import credentials
 cred = credentials.Certificate("path/to/serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
+SEE ALSO
+
+https://codelabs.developers.google.com/codelabs/cloud-run-deploy#0
