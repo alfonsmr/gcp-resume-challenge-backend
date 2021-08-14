@@ -57,7 +57,7 @@ steps:
         set -x && \
         cd github_alfonsmr_gcp-resume-challenge-env && \
         git add service.yaml && \
-        git commit -m "Deploying image ${_GCR_HOSTNAME}/{$PROJECT_ID}/{$REPO_NAME}/{$_SERVICE_NAME}:${SHORT_SHA}
+        git commit -m "Deploying image ${_GCR_HOSTNAME}/${PROJECT_ID}/${REPO_NAME}/${_SERVICE_NAME}:${SHORT_SHA}
         Built from commit ${COMMIT_SHA} of repository gcp-resume-challenge-backend
         Author: $(git log --format='%an <%ae>' -n 1 HEAD)" && \
         git push origin candidate
