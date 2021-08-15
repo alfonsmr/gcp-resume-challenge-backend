@@ -1,6 +1,7 @@
 import os
 import json
 import googlecloudprofiler
+import googleclouddebugger
 
 from flask import Flask, jsonify
 from firebase_admin import credentials, firestore, initialize_app
@@ -27,6 +28,14 @@ try:
     )
 except (ValueError, NotImplementedError) as exc:
     print(exc)  # Handle errors here
+
+try:
+  googleclouddebugger.enable(
+    breakpoint_enable_canary=False
+  )
+
+except ImportError:
+  pass
 
 @app.route('/', methods=['GET'])
 def get_counter():
