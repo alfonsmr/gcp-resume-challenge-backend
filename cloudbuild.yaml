@@ -33,7 +33,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud source repos clone github_alfonsmr_gcp-resume-challenge-env && \
+        gcloud source repos clone github_alfonsmr_gcp-resume-challenge-env --project=$PROJECT_ID && \
         cd github_alfonsmr_gcp-resume-challenge-env && \
         git checkout candidate && \
         git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
