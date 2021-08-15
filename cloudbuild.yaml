@@ -4,7 +4,7 @@ steps:
     args: ['cp', 'gs://${_BUCKET_NAME}/key.json', '.']
     id: Init
 # This step runs the unit tests on the app
-  - name: 'python:3.9-slim'
+  - name: 'python:3.9'
     entrypoint: /bin/sh
     args:
       - -c
