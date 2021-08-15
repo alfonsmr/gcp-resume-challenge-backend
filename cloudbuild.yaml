@@ -45,7 +45,7 @@ steps:
     args:
       - '-c'
       - |
-        sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" service.yaml.tpl | \
+        sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" gcp-resume-challenge-env/service.yaml.tpl | \
         sed "s/COMMIT_SHA/${SHORT_SHA}/g" > gcp-resume-challenge-env/service.yaml
 
 # This step pushes the manifest back to github_alfonsmr_gcp-resume-challenge-env
