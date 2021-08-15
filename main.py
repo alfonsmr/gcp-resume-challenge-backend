@@ -1,5 +1,6 @@
 import os
 import json
+import googlecloudprofiler
 
 from flask import Flask, jsonify
 from firebase_admin import credentials, firestore, initialize_app
@@ -11,6 +12,21 @@ cred = credentials.Certificate('key.json')
 default_app = initialize_app(cred)
 db = firestore.client()
 counter_ref = db.collection(u'counter').document(u'm9GEDCgdE2FPf6Cim9QG')
+
+# Initialize Google CLoud Profiler
+
+try:
+    googlecloudprofiler.start(
+        service='gcp-resume-challenge-counter',
+        service_version='1.0.1',
+        # verbose is the logging level. 0-error, 1-warning, 2-info,
+        # 3-debug. It defaults to 0 (error) if not set.
+        verbose=3,
+        # project_id must be set if not running on GCP.
+        # project_id='my-project-id',
+    )
+except (ValueError, NotImplementedError) as exc:
+    print(exc)  # Handle errors here
 
 @app.route('/', methods=['GET'])
 def get_counter():
