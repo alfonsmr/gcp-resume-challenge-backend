@@ -11,9 +11,10 @@ ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY . ./
 
-# Install Google Cloud Profiler
+# Install Google Cloud Profiler and Debuger
 RUN apt-get update && apt-get install -y build-essential python3-pip
-RUN pip3 install google-cloud-profiler
+RUN pip install google-cloud-profiler
+RUN pip install google-python-cloud-debugger
 
 # Install production dependencies.
 RUN pip install Flask firebase_admin gunicorn
