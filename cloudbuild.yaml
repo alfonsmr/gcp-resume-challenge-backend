@@ -33,8 +33,8 @@ steps:
     args:
       - '-c'
       - |
-        gcloud source repos clone github_alfonsmr_gcp-resume-challenge-env --project=$PROJECT_ID && \
-        cd github_alfonsmr_gcp-resume-challenge-env && \
+        gcloud source repos clone gcp-resume-challenge-env --project=$PROJECT_ID && \
+        cd gcp-resume-challenge-env && \
         git checkout candidate && \
         git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
 
@@ -46,7 +46,7 @@ steps:
       - '-c'
       - |
         sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" service.yaml.tpl | \
-        sed "s/COMMIT_SHA/${SHORT_SHA}/g" > github_alfonsmr_gcp-resume-challenge-env/service.yaml
+        sed "s/COMMIT_SHA/${SHORT_SHA}/g" > gcp-resume-challenge-env/service.yaml
 
 # This step pushes the manifest back to github_alfonsmr_gcp-resume-challenge-env
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -56,7 +56,7 @@ steps:
       - '-c'
       - |
         set -x && \
-        cd github_alfonsmr_gcp-resume-challenge-env && \
+        cd gcp-resume-challenge-env && \
         git add service.yaml && \
         git commit -m "Deploying image ${_GCR_HOSTNAME}/${PROJECT_ID}/${REPO_NAME}/${_SERVICE_NAME}:${SHORT_SHA}
         Built from commit ${COMMIT_SHA} of repository gcp-resume-challenge-backend
