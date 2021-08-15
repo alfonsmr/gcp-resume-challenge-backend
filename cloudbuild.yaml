@@ -3,6 +3,7 @@ steps:
     entrypoint: 'gsutil'
     args: ['cp', 'gs://${_BUCKET_NAME}/key.json', '.']
     id: Init
+# This step runs the unit tests on the app
   - name: 'python:3.9-slim'
     entrypoint: /bin/sh
     args:
