@@ -22,7 +22,7 @@ try:
         service_version='1.0.1',
         # verbose is the logging level. 0-error, 1-warning, 2-info,
         # 3-debug. It defaults to 0 (error) if not set.
-        verbose=3,
+        verbose=2,
         # project_id must be set if not running on GCP.
         # project_id='my-project-id',
     )
@@ -38,6 +38,7 @@ except ImportError:
   pass
 
 @app.route('/', methods=['GET'])
+@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def get_counter():
     """
         update() : Update document in Firestore collection with request body
