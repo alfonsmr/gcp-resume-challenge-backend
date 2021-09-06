@@ -4,9 +4,11 @@ import googlecloudprofiler
 import googleclouddebugger
 
 from flask import Flask, jsonify
+from flask_cors import CORS
 from firebase_admin import credentials, firestore, initialize_app
 
 app = Flask(__name__)
+CORS(app)
 
 # Initialize Firestore DB
 cred = credentials.Certificate('key.json')
@@ -38,7 +40,6 @@ except ImportError:
   pass
 
 @app.route('/', methods=['GET'])
-@crossdomain(origin='*',headers=['access-control-allow-origin','Content-Type'])
 def get_counter():
     """
         update() : Update document in Firestore collection with request body
@@ -49,7 +50,6 @@ def get_counter():
         counter_ref.update({u'total': firestore.Increment(1)})
         doc = counter_ref.get()
         response = jsonify(doc.to_dict()), 200
-        response.headers.add('Access-Control-Allow-Origin', 'https://gcp-resume-challenge.alfonsmr.com')
         return response
     except Exception as e:
         return f"An Error Occured: {e}"
