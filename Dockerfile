@@ -17,7 +17,7 @@ RUN pip install google-cloud-profiler
 RUN pip install google-python-cloud-debugger
 
 # Install production dependencies.
-RUN pip install Flask firebase_admin gunicorn
+RUN pip install Flask flask-cors firebase_admin gunicorn
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
