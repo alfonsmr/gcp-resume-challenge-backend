@@ -8,7 +8,7 @@ steps:
     entrypoint: /bin/sh
     args:
       - -c
-      - 'pip install flask flask-cors firebase_admin google-cloud-profiler google-python-cloud-debugger && python test_app.py -v'
+      - 'pip install flask firebase_admin google-cloud-profiler google-python-cloud-debugger && python test_app.py -v'
     id: Test
   - name: gcr.io/cloud-builders/docker
     args:

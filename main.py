@@ -47,7 +47,9 @@ def get_counter():
     try:
         counter_ref.update({u'total': firestore.Increment(1)})
         doc = counter_ref.get()
-        return jsonify(doc.to_dict()), 200
+        response = jsonify(doc.to_dict()), 200
+        response.headers.add('Access-Control-Allow-Origin', 'https://gcp-resume-challenge.alfonsmr.com')
+        return response
     except Exception as e:
         return f"An Error Occured: {e}"
 
