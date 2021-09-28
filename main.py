@@ -16,7 +16,7 @@ default_app = initialize_app(cred)
 db = firestore.client()
 counter_ref = db.collection(u'counter').document(u'm9GEDCgdE2FPf6Cim9QG')
 
-# Initialize Google CLoud Profiler
+# Initialize Google Cloud Profiler
 
 try:
     googlecloudprofiler.start(
